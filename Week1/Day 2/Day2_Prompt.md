@@ -23,7 +23,7 @@ Write a program to simulate the rover’s movement given an initial position and
 - Add more commands or features. You could support a **`B`** command for moving backward, or have the grid “wrap around” at the edges (as if the plateau is spherical). This encourages more complex condition checks in your code.  
 - Refactor your solution with **OOP** principles: for instance, create a `Rover` class with methods like `turn_left()`, `turn_right()`, and `move()` to encapsulate the rover’s behavior. This makes your code easier to extend (e.g., adding different rover types or behaviors later on).
 
-## 2. Exoplanet Data Analyzer
+## 2. Exoplanet Data Analyzer (USED PANDAS INSTEAD)
 
 **Description:** As a data scientist on the **Interstellar Survey Orbiter**, you’ve received a file containing data on newly discovered exoplanets. Each line in the file lists a planet’s name, its distance from Earth in light years, and its radius relative to Earth (e.g., 1.0 = same radius as Earth). Your task is to read this data file and generate some useful statistics for the astronomy team. Specifically, write a Python program that:  
 - Reads the file line by line (you can assume a comma-separated format: `Name,Distance,Radius`).  
