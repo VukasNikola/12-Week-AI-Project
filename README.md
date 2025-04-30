@@ -1,6 +1,6 @@
 # 12-Week ML/AI Internship Prep Plan 🚀
 
-Embark on a space-themed journey to master Machine Learning and AI. Over 12 weeks, you'll balance theory, coding, and hands-on projects—culminating in a solid portfolio and internship readiness.
+This is a general outline, with a flexible schedule. I will be working on what I feel is best at the moment. Follow my journey <3
 
 ---
 
