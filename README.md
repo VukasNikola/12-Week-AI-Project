@@ -1,4 +1,4 @@
-# 12-Week ML/AI Internship Prep Plan 🚀
+# AI Prep Plan 🚀
 
 This is a general outline, with a flexible schedule. I will be working on what I feel is best at the moment. Follow my journey <3
 
