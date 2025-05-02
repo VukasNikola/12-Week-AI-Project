@@ -89,3 +89,82 @@ Any real \(m\times n\) matrix \(A\) factors as \(A=U\Sigma V^\top\), with orthon
 ---
 
 Use these intuitions next time you encounter any of these: think in terms of **sizes**, **directions**, **components**, **spreads**, and **axes‐of‐stretching** rather than just formulas.
+
+You’re not alone—this trips up lots of people at first, but once you see the patterns it becomes second-nature. Here’s the deal:
+
+---
+
+## 1. Row-vs-Column Samples: the two “camps”  
+- **Row-samples (the most common in ML)**  
+  - Shape: `(n_samples, n_features)`  
+  - Each **row** is one observation/sample, each **column** is a feature.  
+  - Used by scikit-learn, Pandas, TensorFlow (when you feed a batch), etc.  
+- **Column-samples (less common outside signal processing)**  
+  - Shape: `(n_features, n_samples)`  
+  - Each **column** is one sample (so you’d see 3 columns for 3 samples), each **row** a feature.  
+  - Popular in some math texts and MATLAB code (where vectors are by default columns).
+
+---
+
+## 2. Why does it matter?  
+- **Matrix multiplication “just works.”**  
+  - Example: if you have weight vector **w** of size `(n_features,)` and data `X` as `(n_samples, n_features)`, then  
+    ```python
+    y_pred = X @ w        # yields shape (n_samples,)
+    ```  
+  - But if you accidentally made `X` shape `(n_features, n_samples)`, you’d need to transpose:  
+    ```python
+    y_pred = (X.T @ w)    # or w @ X, depending on orientation
+    ```  
+- **API expectations.**  
+  - Almost all ML libraries assume **rows = samples**. If you sneak in a column-sample matrix, you’ll get shape errors or, worse, silent bugs.
+
+---
+
+## 3. How to tell when you load data  
+1. **Check the shape immediately.**  
+   ```python
+   import pandas as pd
+   df = pd.read_csv("data.csv")
+   print(df.shape)  # (n_rows, n_columns)
+   ```  
+   - If you know you have 100 samples and 5 features, you expect `(100, 5)`.  
+2. **Inspect row/column labels.**  
+   - In Pandas, `df.columns` should list your feature names.  
+3. **Read the docs.**  
+   - NumPy arrays have no “semantic” row vs column meaning—only shape matters.  
+   - scikit-learn’s `fit(X, y)` explicitly wants `X.shape == (n_samples, n_features)`.  
+4. **Be consistent.**  
+   - If you ever need the other convention, just call `X.T` to transpose.
+
+---
+
+## 4. A quick example  
+
+```python
+import numpy as np
+
+# Suppose 3 samples, 2 features each
+# Row-sample convention:
+X_rows = np.array([
+    [5.1, 3.5],  # sample 0
+    [4.9, 3.0],  # sample 1
+    [6.2, 3.4],  # sample 2
+])        # shape = (3, 2)
+
+# Column-sample convention:
+X_cols = X_rows.T
+# shape = (2, 3)
+# now column 0 is [5.1, 3.5], column 1 is [4.9, 3.0], etc.
+
+# Dot with weight vector w = [0.4, 0.6]
+w = np.array([0.4, 0.6])
+y1 = X_rows @ w         # shape (3,)
+y2 = w @ X_cols         # also shape (3,)
+```
+
+---
+
+### TL;DR  
+- **Most of the time:** think *rows = samples*, *columns = features*.  
+- **When in doubt:** inspect `shape`, read the library’s docs, and transpose if necessary. And remember—samples don’t really *care* if they’re in rows or columns, but your code (and sanity) will!
